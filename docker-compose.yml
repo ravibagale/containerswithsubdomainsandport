@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  proxy:
+    image: nginx:latest
+    container_name: proxy
+    ports:
+      - "8081:8081"
+      - "8082:8082"
+      - "8083:8083"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - mynetwork
+
+  nginx1:
+    build:
+      context: ./nginx1
+    container_name: nginx1
+    networks:
+      - mynetwork
+
+  nginx2:
+    build:
+      context: ./nginx2
+    container_name: nginx2
+    networks:
+      - mynetwork
+
+  nginx3:
+    build:
+      context: ./nginx3
+    container_name: nginx3
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
